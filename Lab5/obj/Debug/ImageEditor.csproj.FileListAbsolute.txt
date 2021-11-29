@@ -1,0 +1,22 @@
+C:\Users\Alena.DESKTOP-HIMUAQD\source\repos\ImageEditor\bin\Debug\ImageEditor.exe.config
+C:\Users\Alena.DESKTOP-HIMUAQD\source\repos\ImageEditor\bin\Debug\ImageEditor.exe
+C:\Users\Alena.DESKTOP-HIMUAQD\source\repos\ImageEditor\bin\Debug\ImageEditor.pdb
+C:\Users\Alena.DESKTOP-HIMUAQD\source\repos\ImageEditor\obj\Debug\ImageEditor.csprojAssemblyReference.cache
+C:\Users\Alena.DESKTOP-HIMUAQD\source\repos\ImageEditor\obj\Debug\ImageEditor.Properties.Resources.resources
+C:\Users\Alena.DESKTOP-HIMUAQD\source\repos\ImageEditor\obj\Debug\ImageEditor.csproj.GenerateResource.cache
+C:\Users\Alena.DESKTOP-HIMUAQD\source\repos\ImageEditor\obj\Debug\ImageEditor.csproj.CoreCompileInputs.cache
+C:\Users\Alena.DESKTOP-HIMUAQD\source\repos\ImageEditor\obj\Debug\ImageEditor.exe
+C:\Users\Alena.DESKTOP-HIMUAQD\source\repos\ImageEditor\obj\Debug\ImageEditor.pdb
+C:\Users\Alena.DESKTOP-HIMUAQD\source\repos\ImageEditor\obj\Debug\ImageEditor.ImageEditor.resources
+C:\Users\Alena.DESKTOP-HIMUAQD\source\repos\ImageEditor\obj\Debug\ImageEditor.FractalPainter.resources
+C:\Users\Alena.DESKTOP-HIMUAQD\source\repos\ImageEditor\obj\Debug\ImageEditor.MainForm.resources
+C:\Users\Alena.DESKTOP-HIMUAQD\Desktop\комп графика\Lab4and5\bin\Debug\ImageEditor.exe.config
+C:\Users\Alena.DESKTOP-HIMUAQD\Desktop\комп графика\Lab4and5\bin\Debug\ImageEditor.exe
+C:\Users\Alena.DESKTOP-HIMUAQD\Desktop\комп графика\Lab4and5\bin\Debug\ImageEditor.pdb
+C:\Users\Alena.DESKTOP-HIMUAQD\Desktop\комп графика\Lab4and5\obj\Debug\ImageEditor.csprojAssemblyReference.cache
+C:\Users\Alena.DESKTOP-HIMUAQD\Desktop\комп графика\Lab4and5\obj\Debug\ImageEditor.ImageEditor.resources
+C:\Users\Alena.DESKTOP-HIMUAQD\Desktop\комп графика\Lab4and5\obj\Debug\ImageEditor.Properties.Resources.resources
+C:\Users\Alena.DESKTOP-HIMUAQD\Desktop\комп графика\Lab4and5\obj\Debug\ImageEditor.csproj.GenerateResource.cache
+C:\Users\Alena.DESKTOP-HIMUAQD\Desktop\комп графика\Lab4and5\obj\Debug\ImageEditor.csproj.CoreCompileInputs.cache
+C:\Users\Alena.DESKTOP-HIMUAQD\Desktop\комп графика\Lab4and5\obj\Debug\ImageEditor.exe
+C:\Users\Alena.DESKTOP-HIMUAQD\Desktop\комп графика\Lab4and5\obj\Debug\ImageEditor.pdb
