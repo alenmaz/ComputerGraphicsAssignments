@@ -60,7 +60,7 @@ namespace WindowsFormsApp1
             this.depthBox.Name = "depthBox";
             this.depthBox.Size = new System.Drawing.Size(38, 20);
             this.depthBox.TabIndex = 2;
-            this.depthBox.Text = "2";
+            this.depthBox.Text = "4";
             // 
             // label1
             // 
