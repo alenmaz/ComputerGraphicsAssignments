@@ -558,5 +558,19 @@ namespace Lab7
                 }
             }
         }
+
+        private void clearToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Storage.GetScenes().Find(s => s.Name == sceneComboBox.SelectedItem.ToString()).Objects.Clear();
+            objComboBox.Items.Clear();
+            objComboBox.Items.Add("None");
+            objComboBox.SelectedIndex = 0;
+
+            textureComboBox.Items.Clear();
+            textureComboBox.Items.Add("None");
+
+            mComboBox.Items.Clear();
+            mComboBox.Items.Add("None");
+        }
     }
 }

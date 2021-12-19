@@ -41,7 +41,6 @@ namespace Lab7
             this.importobjToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importmtlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sceneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newSceneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -88,6 +87,8 @@ namespace Lab7
             this.xLabel = new System.Windows.Forms.Label();
             this.xTextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.clearToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.label14 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -98,7 +99,7 @@ namespace Lab7
             this.glControl1.BackColor = System.Drawing.Color.Black;
             this.glControl1.Location = new System.Drawing.Point(0, 27);
             this.glControl1.Name = "glControl1";
-            this.glControl1.Size = new System.Drawing.Size(555, 573);
+            this.glControl1.Size = new System.Drawing.Size(555, 490);
             this.glControl1.TabIndex = 0;
             this.glControl1.VSync = false;
             this.glControl1.Paint += new System.Windows.Forms.PaintEventHandler(this.glControl1_Paint);
@@ -177,8 +178,7 @@ namespace Lab7
             this.modelToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.importobjToolStripMenuItem,
             this.importmtlToolStripMenuItem,
-            this.importImageToolStripMenuItem,
-            this.clearToolStripMenuItem});
+            this.importImageToolStripMenuItem});
             this.modelToolStripMenuItem.Name = "modelToolStripMenuItem";
             this.modelToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.modelToolStripMenuItem.Text = "File";
@@ -205,17 +205,11 @@ namespace Lab7
             this.importImageToolStripMenuItem.Text = "Import image";
             this.importImageToolStripMenuItem.Click += new System.EventHandler(this.importImageToolStripMenuItem_Click);
             // 
-            // clearToolStripMenuItem
-            // 
-            this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
-            this.clearToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.clearToolStripMenuItem.Text = "Clear";
-            this.clearToolStripMenuItem.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
-            // 
             // sceneToolStripMenuItem
             // 
             this.sceneToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newSceneToolStripMenuItem});
+            this.newSceneToolStripMenuItem,
+            this.clearToolStripMenuItem1});
             this.sceneToolStripMenuItem.Name = "sceneToolStripMenuItem";
             this.sceneToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
             this.sceneToolStripMenuItem.Text = "Scene";
@@ -253,13 +247,13 @@ namespace Lab7
             // addToolStripMenuItem
             // 
             this.addToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.modelExampleToolStripMenuItem,
             this.cubeToolStripMenuItem,
             this.sphereToolStripMenuItem,
             this.pyramidToolStripMenuItem,
             this.torusToolStripMenuItem,
             this.conusToolStripMenuItem,
-            this.cylinderToolStripMenuItem,
-            this.modelExampleToolStripMenuItem});
+            this.cylinderToolStripMenuItem});
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
             this.addToolStripMenuItem.Size = new System.Drawing.Size(82, 20);
             this.addToolStripMenuItem.Text = "Add mesh...";
@@ -362,7 +356,7 @@ namespace Lab7
             this.groupBox1.Size = new System.Drawing.Size(239, 243);
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Settings";
+            this.groupBox1.Text = "Scene and object settings";
             // 
             // sceneComboBox
             // 
@@ -385,6 +379,7 @@ namespace Lab7
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label14);
             this.groupBox2.Controls.Add(this.label11);
             this.groupBox2.Controls.Add(this.RGBBox3);
             this.groupBox2.Controls.Add(this.label12);
@@ -412,7 +407,7 @@ namespace Lab7
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Location = new System.Drawing.Point(561, 276);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(239, 324);
+            this.groupBox2.Size = new System.Drawing.Size(239, 241);
             this.groupBox2.TabIndex = 15;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Object spawner settings";
@@ -420,7 +415,7 @@ namespace Lab7
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(10, 301);
+            this.label11.Location = new System.Drawing.Point(116, 97);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(14, 13);
             this.label11.TabIndex = 24;
@@ -428,7 +423,7 @@ namespace Lab7
             // 
             // RGBBox3
             // 
-            this.RGBBox3.Location = new System.Drawing.Point(30, 298);
+            this.RGBBox3.Location = new System.Drawing.Point(136, 94);
             this.RGBBox3.Name = "RGBBox3";
             this.RGBBox3.Size = new System.Drawing.Size(34, 20);
             this.RGBBox3.TabIndex = 23;
@@ -437,7 +432,7 @@ namespace Lab7
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(10, 275);
+            this.label12.Location = new System.Drawing.Point(116, 71);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(15, 13);
             this.label12.TabIndex = 22;
@@ -445,7 +440,7 @@ namespace Lab7
             // 
             // RGBBox2
             // 
-            this.RGBBox2.Location = new System.Drawing.Point(30, 272);
+            this.RGBBox2.Location = new System.Drawing.Point(136, 68);
             this.RGBBox2.Name = "RGBBox2";
             this.RGBBox2.Size = new System.Drawing.Size(34, 20);
             this.RGBBox2.TabIndex = 21;
@@ -454,7 +449,7 @@ namespace Lab7
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(10, 249);
+            this.label13.Location = new System.Drawing.Point(116, 45);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(15, 13);
             this.label13.TabIndex = 20;
@@ -462,7 +457,7 @@ namespace Lab7
             // 
             // RGBBox1
             // 
-            this.RGBBox1.Location = new System.Drawing.Point(30, 246);
+            this.RGBBox1.Location = new System.Drawing.Point(136, 42);
             this.RGBBox1.Name = "RGBBox1";
             this.RGBBox1.Size = new System.Drawing.Size(34, 20);
             this.RGBBox1.TabIndex = 19;
@@ -471,7 +466,7 @@ namespace Lab7
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(8, 231);
+            this.label10.Location = new System.Drawing.Point(116, 26);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(31, 13);
             this.label10.TabIndex = 18;
@@ -489,7 +484,7 @@ namespace Lab7
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(155, 176);
+            this.label8.Location = new System.Drawing.Point(116, 179);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(15, 13);
             this.label8.TabIndex = 16;
@@ -497,7 +492,7 @@ namespace Lab7
             // 
             // BigRBox
             // 
-            this.BigRBox.Location = new System.Drawing.Point(193, 173);
+            this.BigRBox.Location = new System.Drawing.Point(136, 177);
             this.BigRBox.Name = "BigRBox";
             this.BigRBox.Size = new System.Drawing.Size(34, 20);
             this.BigRBox.TabIndex = 15;
@@ -506,7 +501,7 @@ namespace Lab7
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(155, 151);
+            this.label7.Location = new System.Drawing.Point(116, 154);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(10, 13);
             this.label7.TabIndex = 14;
@@ -514,7 +509,7 @@ namespace Lab7
             // 
             // rBox
             // 
-            this.rBox.Location = new System.Drawing.Point(193, 147);
+            this.rBox.Location = new System.Drawing.Point(136, 151);
             this.rBox.Name = "rBox";
             this.rBox.Size = new System.Drawing.Size(34, 20);
             this.rBox.TabIndex = 13;
@@ -627,15 +622,31 @@ namespace Lab7
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(7, 26);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(57, 13);
+            this.label3.Size = new System.Drawing.Size(55, 13);
             this.label3.TabIndex = 0;
-            this.label3.Text = "Pivot point";
+            this.label3.Text = "Start point";
+            // 
+            // clearToolStripMenuItem1
+            // 
+            this.clearToolStripMenuItem1.Name = "clearToolStripMenuItem1";
+            this.clearToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.clearToolStripMenuItem1.Text = "Clear";
+            this.clearToolStripMenuItem1.Click += new System.EventHandler(this.clearToolStripMenuItem1_Click);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(116, 130);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(95, 13);
+            this.label14.TabIndex = 25;
+            this.label14.Text = "Optional properties";
             // 
             // ModelViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 600);
+            this.ClientSize = new System.Drawing.Size(800, 519);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.glControl1);
@@ -670,7 +681,6 @@ namespace Lab7
         private System.Windows.Forms.ToolStripMenuItem importmtlToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem importImageToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem lightToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem makeLightSourceToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteLightSourceToolStripMenuItem;
@@ -716,6 +726,8 @@ namespace Lab7
         private System.Windows.Forms.ComboBox sceneComboBox;
         private System.Windows.Forms.ToolStripMenuItem sceneToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newSceneToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem1;
+        private System.Windows.Forms.Label label14;
     }
 }
 
