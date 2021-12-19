@@ -89,19 +89,7 @@ namespace Lab7
             glControl1.Invalidate();
             foreach (var l in Storage.GetLights())
                 if(!lightComboBox.Items.Contains(l.Name)) lightComboBox.Items.Add(l.Name);
-            var scene = Storage.GetScenes().Find(s => s.Name == sceneComboBox.SelectedItem.ToString());
 
-            if(objComboBox.SelectedIndex > 0)
-            {
-                var obj = scene.Objects.Find(o => o.Name == objComboBox.SelectedItem.ToString());
-                if (obj != null)
-                {
-                    var mat2 = Storage.GetMaterials().Find(m => m.Name == mComboBox.SelectedItem.ToString());
-                    if (mat2 != null) obj.Material = mat2;
-                    var tex2 = Storage.GetTextures().Find(t => t.Name == textureComboBox.SelectedItem.ToString());
-                    if (tex2 != null) obj.Texture = tex2;
-                }
-            }
         }
 
         private void glControl1_Zoom(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -164,13 +152,10 @@ namespace Lab7
                 if (!selected.Equals("None"))
                 {
                     var obj2 = scene.Objects.Find(o => o.Name == objComboBox.SelectedItem.ToString());
-                    var mat2 = Storage.GetMaterials().Find(m => m.Name == mComboBox.SelectedItem.ToString());
-                    var tex2 = Storage.GetTextures().Find(t => t.Name == textureComboBox.SelectedItem.ToString());
                     var light = Storage.GetLights().Find(l => l.Name == lightComboBox.SelectedItem.ToString());
 
                     if (obj2 != null)
-                        obj2.Draw(mat2 is null ? obj2.Material : mat2,
-                            tex2 is null ? obj2.Texture : tex2,
+                        obj2.Draw(Storage.GetMaterials().Find(m => m.Name == mComboBox.SelectedItem.ToString()),
                             light is null ? Storage.GetLights().Find(l => l.Name == "base") : light,
                             viewPos);
                 }
@@ -181,7 +166,7 @@ namespace Lab7
         {
             var light = Storage.GetLights().Find(l => l.Name == lightComboBox.SelectedItem.ToString());
             foreach (var obj in scene.Objects)
-                obj.Draw(obj.Material,obj.Texture, light is null ? Storage.GetLights().Find(l => l.Name == "base") : light, viewPos);
+                obj.Draw(null, light is null ? Storage.GetLights().Find(l => l.Name == "base") : light, viewPos);
         }
 
         private static void DrawAxis(Vector3 clr1, Vector3 clr2, Vector3 clr3)
@@ -228,7 +213,11 @@ namespace Lab7
                 if (open.ShowDialog() == DialogResult.OK)
                 {
                     var selected = Storage.GetScenes().Find(s => s.Name == sceneComboBox.SelectedItem.ToString());
-                    foreach (var obj in ObjFormatParser.Parse(open.FileName)) selected.Objects.Add(obj);
+                    foreach (var obj in ObjFormatParser.Parse(open.FileName))
+                    {
+                        selected.Objects.Add(obj);
+                        objComboBox.Items.Add(obj.Name);
+                    }
                 }
             }
             catch
@@ -263,10 +252,11 @@ namespace Lab7
                 OpenFileDialog open = new OpenFileDialog();
                 if (open.ShowDialog() == DialogResult.OK)
                 {
-                    var texture = new Bitmap(open.FileName);
+                    var bitmap = new Bitmap(open.FileName);
                     var fileName = Path.GetFileName(open.FileName);
-                    Storage.AddTexture(new Texture(fileName, texture));
+                    var texture = new Texture(fileName, bitmap);
                     textureComboBox.Items.Add(fileName);
+                    Storage.AddTexture(texture);
                 }
             }
             catch
@@ -276,9 +266,38 @@ namespace Lab7
             }
         }
 
+
+        private int LoadTexture(Texture texture)
+        {
+            int textureID = 0;
+            GL.GenTextures(1, out textureID);
+
+            if (texture != null)
+            {
+                var bitmap = texture.TextureImage;
+
+                GL.Hint(HintTarget.PerspectiveCorrectionHint, HintMode.Nicest);
+
+                GL.GenTextures(1, out textureID);
+                GL.BindTexture(TextureTarget.Texture2D, textureID);
+                BitmapData data = bitmap.LockBits(new System.Drawing.Rectangle(0, 0, bitmap.Width, bitmap.Height),
+                    ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, data.Width, data.Height, 0,
+                    OpenTK.Graphics.PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
+                bitmap.UnlockBits(data);
+
+                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
+                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
+                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Repeat);
+                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Repeat);
+            }
+            return textureID;
+        }
+
         private void clearToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Storage = new Storage();
+            Storage.GetScenes().Find(s => s.Name == sceneComboBox.SelectedItem.ToString()).Objects.Clear();
             objComboBox.Items.Clear();
             objComboBox.Items.Add("None");
             objComboBox.SelectedIndex = 0;
@@ -497,6 +516,7 @@ namespace Lab7
             var scene = Storage.GetScenes().Find(s => s.Name == sceneComboBox.SelectedItem.ToString());
             objComboBox.Items.Clear();
             objComboBox.Items.Add("None");
+            if (scene != null) objComboBox.Items.AddRange(scene.Objects.Select(o => o.Name).ToArray());
         }
 
         private void newSceneToolStripMenuItem_Click(object sender, EventArgs e)
@@ -505,6 +525,38 @@ namespace Lab7
             var scene = new Scene(name);
             Storage.GetScenes().Add(scene);
             sceneComboBox.Items.Add(name);
+        }
+
+        private void mComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var selected = Storage.GetScenes().Find(s => s.Name == sceneComboBox.SelectedItem.ToString());
+            if (objComboBox.SelectedIndex > 0 && selected != null)
+            {
+                var obj = selected.Objects.Find(o => o.Name == objComboBox.SelectedItem.ToString());
+                if (obj != null)
+                {
+                    Material mat2 = Storage.GetMaterials().Find(m => m.Name == mComboBox.SelectedItem.ToString());
+                    if (mat2 != null) obj.Material = mat2;
+                }
+            }
+        }
+
+        private void textureComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var selected = Storage.GetScenes().Find(s => s.Name == sceneComboBox.SelectedItem.ToString());
+            if (objComboBox.SelectedIndex > 0 && selected != null)
+            {
+                var obj = selected.Objects.Find(o => o.Name == objComboBox.SelectedItem.ToString());
+                if (obj != null)
+                {
+                    Texture tex2 = Storage.GetTextures().Find(t => t.Name == textureComboBox.SelectedItem.ToString());
+                    if (tex2 != null)
+                    {
+                        int id = LoadTexture(tex2);
+                        obj.TextureID = id;
+                    }
+                }
+            }
         }
     }
 }
