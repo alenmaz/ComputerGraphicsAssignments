@@ -52,11 +52,27 @@ namespace Lab7
             this.torusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.conusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cylinderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.modelExampleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.greekTempleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label2 = new System.Windows.Forms.Label();
             this.lightComboBox = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.sceneComboBox = new System.Windows.Forms.ComboBox();
+            this.drawAllCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.RGBBox3 = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.RGBBox2 = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.RGBBox1 = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.BigRBox = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.rBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.sizeZBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -70,19 +86,8 @@ namespace Lab7
             this.xLabel = new System.Windows.Forms.Label();
             this.xTextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.rBox = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.BigRBox = new System.Windows.Forms.TextBox();
-            this.drawAllCheckBox = new System.Windows.Forms.CheckBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.RGBBox3 = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.RGBBox2 = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
-            this.RGBBox1 = new System.Windows.Forms.TextBox();
+            this.sceneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newSceneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -157,7 +162,8 @@ namespace Lab7
             this.modelToolStripMenuItem,
             this.lightToolStripMenuItem,
             this.addToolStripMenuItem,
-            this.aboutToolStripMenuItem});
+            this.aboutToolStripMenuItem,
+            this.sceneToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(800, 24);
@@ -235,52 +241,68 @@ namespace Lab7
             this.pyramidToolStripMenuItem,
             this.torusToolStripMenuItem,
             this.conusToolStripMenuItem,
-            this.cylinderToolStripMenuItem});
+            this.cylinderToolStripMenuItem,
+            this.modelExampleToolStripMenuItem});
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
-            this.addToolStripMenuItem.Text = "Add...";
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(82, 20);
+            this.addToolStripMenuItem.Text = "Add mesh...";
             // 
             // cubeToolStripMenuItem
             // 
             this.cubeToolStripMenuItem.Name = "cubeToolStripMenuItem";
-            this.cubeToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
+            this.cubeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.cubeToolStripMenuItem.Text = "Cube";
             this.cubeToolStripMenuItem.Click += new System.EventHandler(this.cubeToolStripMenuItem_Click);
             // 
             // sphereToolStripMenuItem
             // 
             this.sphereToolStripMenuItem.Name = "sphereToolStripMenuItem";
-            this.sphereToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
+            this.sphereToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.sphereToolStripMenuItem.Text = "Sphere";
             this.sphereToolStripMenuItem.Click += new System.EventHandler(this.sphereToolStripMenuItem_Click);
             // 
             // pyramidToolStripMenuItem
             // 
             this.pyramidToolStripMenuItem.Name = "pyramidToolStripMenuItem";
-            this.pyramidToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
+            this.pyramidToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.pyramidToolStripMenuItem.Text = "Pyramid";
             this.pyramidToolStripMenuItem.Click += new System.EventHandler(this.pyramidToolStripMenuItem_Click);
             // 
             // torusToolStripMenuItem
             // 
             this.torusToolStripMenuItem.Name = "torusToolStripMenuItem";
-            this.torusToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
+            this.torusToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.torusToolStripMenuItem.Text = "Torus";
             this.torusToolStripMenuItem.Click += new System.EventHandler(this.torusToolStripMenuItem_Click);
             // 
             // conusToolStripMenuItem
             // 
             this.conusToolStripMenuItem.Name = "conusToolStripMenuItem";
-            this.conusToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
+            this.conusToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.conusToolStripMenuItem.Text = "Conus";
             this.conusToolStripMenuItem.Click += new System.EventHandler(this.conusToolStripMenuItem_Click);
             // 
             // cylinderToolStripMenuItem
             // 
             this.cylinderToolStripMenuItem.Name = "cylinderToolStripMenuItem";
-            this.cylinderToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
+            this.cylinderToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.cylinderToolStripMenuItem.Text = "Cylinder";
             this.cylinderToolStripMenuItem.Click += new System.EventHandler(this.cylinderToolStripMenuItem_Click);
+            // 
+            // modelExampleToolStripMenuItem
+            // 
+            this.modelExampleToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.greekTempleToolStripMenuItem});
+            this.modelExampleToolStripMenuItem.Name = "modelExampleToolStripMenuItem";
+            this.modelExampleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.modelExampleToolStripMenuItem.Text = "Model Example";
+            // 
+            // greekTempleToolStripMenuItem
+            // 
+            this.greekTempleToolStripMenuItem.Name = "greekTempleToolStripMenuItem";
+            this.greekTempleToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.greekTempleToolStripMenuItem.Text = "Greek Temple";
+            this.greekTempleToolStripMenuItem.Click += new System.EventHandler(this.greekTempleToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
@@ -308,6 +330,7 @@ namespace Lab7
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.sceneComboBox);
             this.groupBox1.Controls.Add(this.drawAllCheckBox);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
@@ -323,6 +346,25 @@ namespace Lab7
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Settings";
+            // 
+            // sceneComboBox
+            // 
+            this.sceneComboBox.FormattingEnabled = true;
+            this.sceneComboBox.Location = new System.Drawing.Point(94, 26);
+            this.sceneComboBox.Name = "sceneComboBox";
+            this.sceneComboBox.Size = new System.Drawing.Size(121, 21);
+            this.sceneComboBox.TabIndex = 16;
+            this.sceneComboBox.SelectedIndexChanged += new System.EventHandler(this.sceneComboBox_SelectedIndexChanged);
+            // 
+            // drawAllCheckBox
+            // 
+            this.drawAllCheckBox.AutoSize = true;
+            this.drawAllCheckBox.Location = new System.Drawing.Point(10, 28);
+            this.drawAllCheckBox.Name = "drawAllCheckBox";
+            this.drawAllCheckBox.Size = new System.Drawing.Size(64, 17);
+            this.drawAllCheckBox.TabIndex = 13;
+            this.drawAllCheckBox.Text = "Draw all";
+            this.drawAllCheckBox.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
@@ -357,6 +399,109 @@ namespace Lab7
             this.groupBox2.TabIndex = 15;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Object spawner settings";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(10, 301);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(14, 13);
+            this.label11.TabIndex = 24;
+            this.label11.Text = "B";
+            // 
+            // RGBBox3
+            // 
+            this.RGBBox3.Location = new System.Drawing.Point(30, 298);
+            this.RGBBox3.Name = "RGBBox3";
+            this.RGBBox3.Size = new System.Drawing.Size(34, 20);
+            this.RGBBox3.TabIndex = 23;
+            this.RGBBox3.Text = "0";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(10, 275);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(15, 13);
+            this.label12.TabIndex = 22;
+            this.label12.Text = "G";
+            // 
+            // RGBBox2
+            // 
+            this.RGBBox2.Location = new System.Drawing.Point(30, 272);
+            this.RGBBox2.Name = "RGBBox2";
+            this.RGBBox2.Size = new System.Drawing.Size(34, 20);
+            this.RGBBox2.TabIndex = 21;
+            this.RGBBox2.Text = "0";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(10, 249);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(15, 13);
+            this.label13.TabIndex = 20;
+            this.label13.Text = "R";
+            // 
+            // RGBBox1
+            // 
+            this.RGBBox1.Location = new System.Drawing.Point(30, 246);
+            this.RGBBox1.Name = "RGBBox1";
+            this.RGBBox1.Size = new System.Drawing.Size(34, 20);
+            this.RGBBox1.TabIndex = 19;
+            this.RGBBox1.Text = "0";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(8, 231);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(31, 13);
+            this.label10.TabIndex = 18;
+            this.label10.Text = "Color";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(8, 130);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(54, 13);
+            this.label9.TabIndex = 17;
+            this.label9.Text = "Properties";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(155, 176);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(15, 13);
+            this.label8.TabIndex = 16;
+            this.label8.Text = "R";
+            // 
+            // BigRBox
+            // 
+            this.BigRBox.Location = new System.Drawing.Point(193, 173);
+            this.BigRBox.Name = "BigRBox";
+            this.BigRBox.Size = new System.Drawing.Size(34, 20);
+            this.BigRBox.TabIndex = 15;
+            this.BigRBox.Text = "1";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(155, 151);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(10, 13);
+            this.label7.TabIndex = 14;
+            this.label7.Text = "r";
+            // 
+            // rBox
+            // 
+            this.rBox.Location = new System.Drawing.Point(193, 147);
+            this.rBox.Name = "rBox";
+            this.rBox.Size = new System.Drawing.Size(34, 20);
+            this.rBox.TabIndex = 13;
+            this.rBox.Text = "1";
             // 
             // label6
             // 
@@ -469,118 +614,20 @@ namespace Lab7
             this.label3.TabIndex = 0;
             this.label3.Text = "Pivot point";
             // 
-            // label7
+            // sceneToolStripMenuItem
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(155, 151);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(10, 13);
-            this.label7.TabIndex = 14;
-            this.label7.Text = "r";
+            this.sceneToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newSceneToolStripMenuItem});
+            this.sceneToolStripMenuItem.Name = "sceneToolStripMenuItem";
+            this.sceneToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
+            this.sceneToolStripMenuItem.Text = "Scene";
             // 
-            // rBox
+            // newSceneToolStripMenuItem
             // 
-            this.rBox.Location = new System.Drawing.Point(193, 147);
-            this.rBox.Name = "rBox";
-            this.rBox.Size = new System.Drawing.Size(34, 20);
-            this.rBox.TabIndex = 13;
-            this.rBox.Text = "1";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(155, 176);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(15, 13);
-            this.label8.TabIndex = 16;
-            this.label8.Text = "R";
-            // 
-            // BigRBox
-            // 
-            this.BigRBox.Location = new System.Drawing.Point(193, 173);
-            this.BigRBox.Name = "BigRBox";
-            this.BigRBox.Size = new System.Drawing.Size(34, 20);
-            this.BigRBox.TabIndex = 15;
-            this.BigRBox.Text = "1";
-            // 
-            // drawAllCheckBox
-            // 
-            this.drawAllCheckBox.AutoSize = true;
-            this.drawAllCheckBox.Location = new System.Drawing.Point(10, 28);
-            this.drawAllCheckBox.Name = "drawAllCheckBox";
-            this.drawAllCheckBox.Size = new System.Drawing.Size(64, 17);
-            this.drawAllCheckBox.TabIndex = 13;
-            this.drawAllCheckBox.Text = "Draw all";
-            this.drawAllCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(8, 130);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(54, 13);
-            this.label9.TabIndex = 17;
-            this.label9.Text = "Properties";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(8, 231);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(31, 13);
-            this.label10.TabIndex = 18;
-            this.label10.Text = "Color";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(10, 301);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(14, 13);
-            this.label11.TabIndex = 24;
-            this.label11.Text = "B";
-            // 
-            // RGBBox3
-            // 
-            this.RGBBox3.Location = new System.Drawing.Point(30, 298);
-            this.RGBBox3.Name = "RGBBox3";
-            this.RGBBox3.Size = new System.Drawing.Size(34, 20);
-            this.RGBBox3.TabIndex = 23;
-            this.RGBBox3.Text = "0";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(10, 275);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(15, 13);
-            this.label12.TabIndex = 22;
-            this.label12.Text = "G";
-            // 
-            // RGBBox2
-            // 
-            this.RGBBox2.Location = new System.Drawing.Point(30, 272);
-            this.RGBBox2.Name = "RGBBox2";
-            this.RGBBox2.Size = new System.Drawing.Size(34, 20);
-            this.RGBBox2.TabIndex = 21;
-            this.RGBBox2.Text = "0";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(10, 249);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(15, 13);
-            this.label13.TabIndex = 20;
-            this.label13.Text = "R";
-            // 
-            // RGBBox1
-            // 
-            this.RGBBox1.Location = new System.Drawing.Point(30, 246);
-            this.RGBBox1.Name = "RGBBox1";
-            this.RGBBox1.Size = new System.Drawing.Size(34, 20);
-            this.RGBBox1.TabIndex = 19;
-            this.RGBBox1.Text = "0";
+            this.newSceneToolStripMenuItem.Name = "newSceneToolStripMenuItem";
+            this.newSceneToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newSceneToolStripMenuItem.Text = "New scene";
+            this.newSceneToolStripMenuItem.Click += new System.EventHandler(this.newSceneToolStripMenuItem_Click);
             // 
             // ModelViewer
             // 
@@ -662,6 +709,11 @@ namespace Lab7
         private System.Windows.Forms.TextBox RGBBox1;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ToolStripMenuItem modelExampleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem greekTempleToolStripMenuItem;
+        private System.Windows.Forms.ComboBox sceneComboBox;
+        private System.Windows.Forms.ToolStripMenuItem sceneToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem newSceneToolStripMenuItem;
     }
 }
 

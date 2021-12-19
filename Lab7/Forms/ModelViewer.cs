@@ -18,6 +18,7 @@ using OpenTK.Input;
 using Lab7.Entities.Base;
 using Lab7.Entities.Objects;
 using Lab7.Parsesrs;
+using Lab7.Repositories;
 
 namespace Lab7
 {
@@ -63,8 +64,11 @@ namespace Lab7
 
             Storage.GetLights().Add(new Light("base", new Vector3(1.0f, 1.0f, 1.0f), new Vector3(5.0f, 0.0f, 0.0f)));
 
-            objComboBox.Items.Add("None");
-            objComboBox.SelectedIndex = 0;
+            sceneComboBox.Items.Add("Default scene");
+            var scene = new Scene("Default scene");
+            scene.Objects.Add(new Primitives.Cube("cube", new Vector3(0, 0, 0), 1, 1, 1));
+            Storage.AddScene(scene);
+            sceneComboBox.SelectedIndex = 0;
 
             Storage.AddMaterial(Material.Default);
             mComboBox.Items.Add(Material.Default.Name);
@@ -76,6 +80,8 @@ namespace Lab7
             lightComboBox.Items.Add("None");
             lightComboBox.Items.Add("base");
             lightComboBox.SelectedIndex = 0;
+
+            drawAllCheckBox.Checked = true;
         }
 
         private void Update(object sender, EventArgs e)
@@ -83,13 +89,18 @@ namespace Lab7
             glControl1.Invalidate();
             foreach (var l in Storage.GetLights())
                 if(!lightComboBox.Items.Contains(l.Name)) lightComboBox.Items.Add(l.Name);
-            var obj2 = Storage.GetObjects().Find(o => o.Name == objComboBox.SelectedItem.ToString());
-            if (obj2 != null)
+            var scene = Storage.GetScenes().Find(s => s.Name == sceneComboBox.SelectedItem.ToString());
+
+            if(objComboBox.SelectedIndex > 0)
             {
-                var mat2 = Storage.GetMaterials().Find(m => m.Name == mComboBox.SelectedItem.ToString());
-                if (mat2 != null) obj2.Material = mat2;
-                var tex2 = Storage.GetTextures().Find(t => t.Name == textureComboBox.SelectedItem.ToString());
-                if (tex2 != null) obj2.Texture = tex2;
+                var obj = scene.Objects.Find(o => o.Name == objComboBox.SelectedItem.ToString());
+                if (obj != null)
+                {
+                    var mat2 = Storage.GetMaterials().Find(m => m.Name == mComboBox.SelectedItem.ToString());
+                    if (mat2 != null) obj.Material = mat2;
+                    var tex2 = Storage.GetTextures().Find(t => t.Name == textureComboBox.SelectedItem.ToString());
+                    if (tex2 != null) obj.Texture = tex2;
+                }
             }
         }
 
@@ -132,36 +143,44 @@ namespace Lab7
             GL.ShadeModel(ShadingModel.Smooth);
 
             DrawAxis(new Vector3(1.0f, 1.0f, 0.0f), new Vector3(1.0f, 0.0f, 0.0f), new Vector3(0.2f, 0.9f, 1.0f));
-            if (drawAllCheckBox.Checked) DrawAll(viewPos);
-            else DrawObject(viewPos);
+            var selected = sceneComboBox.SelectedItem.ToString();
+            if (selected != null)
+            {
+                var scene = Storage.GetScenes().Find(s => s.Name == sceneComboBox.SelectedItem.ToString());
+                if (drawAllCheckBox.Checked) DrawAll(viewPos, scene);
+                else DrawObject(viewPos, scene);
+            }
 
             glControl1.SwapBuffers();
         }
 
-        private void DrawObject(Vector3 viewPos)
+        private void DrawObject(Vector3 viewPos, Scene scene)
         {
             var normal = new Vector3(1, 1, 1);
 
-            var selected = objComboBox.SelectedItem.ToString();
-            if (!selected.Equals("None"))
+            if (objComboBox.SelectedIndex > 0)
             {
-                var obj2 = Storage.GetObjects().Find(o => o.Name == objComboBox.SelectedItem.ToString());
-                var mat2 = Storage.GetMaterials().Find(m => m.Name == mComboBox.SelectedItem.ToString());
-                var tex2 = Storage.GetTextures().Find(t => t.Name == textureComboBox.SelectedItem.ToString());
-                var light = Storage.GetLights().Find(l => l.Name == lightComboBox.SelectedItem.ToString());
+                var selected = objComboBox.SelectedItem.ToString();
+                if (!selected.Equals("None"))
+                {
+                    var obj2 = scene.Objects.Find(o => o.Name == objComboBox.SelectedItem.ToString());
+                    var mat2 = Storage.GetMaterials().Find(m => m.Name == mComboBox.SelectedItem.ToString());
+                    var tex2 = Storage.GetTextures().Find(t => t.Name == textureComboBox.SelectedItem.ToString());
+                    var light = Storage.GetLights().Find(l => l.Name == lightComboBox.SelectedItem.ToString());
 
-                if (obj2 != null) 
-                    obj2.Draw(mat2 is null ? obj2.Material : mat2, 
-                        tex2 is null ? obj2.Texture : tex2, 
-                        light is null ? Storage.GetLights().Find(l => l.Name == "base") : light, 
-                        viewPos);
+                    if (obj2 != null)
+                        obj2.Draw(mat2 is null ? obj2.Material : mat2,
+                            tex2 is null ? obj2.Texture : tex2,
+                            light is null ? Storage.GetLights().Find(l => l.Name == "base") : light,
+                            viewPos);
+                }
             }
         }
 
-        private void DrawAll(Vector3 viewPos)
+        private void DrawAll(Vector3 viewPos, Scene scene)
         {
             var light = Storage.GetLights().Find(l => l.Name == lightComboBox.SelectedItem.ToString());
-            foreach (var obj in Storage.GetObjects())
+            foreach (var obj in scene.Objects)
                 obj.Draw(obj.Material,obj.Texture, light is null ? Storage.GetLights().Find(l => l.Name == "base") : light, viewPos);
         }
 
@@ -208,8 +227,8 @@ namespace Lab7
                 OpenFileDialog open = new OpenFileDialog();
                 if (open.ShowDialog() == DialogResult.OK)
                 {
-                    foreach (var obj in ObjFormatParser.Parse(open.FileName)) Storage.AddObject(obj);
-                    objComboBox.Items.AddRange(Storage.GetObjects().Select(i => i.Name).ToArray());
+                    var selected = Storage.GetScenes().Find(s => s.Name == sceneComboBox.SelectedItem.ToString());
+                    foreach (var obj in ObjFormatParser.Parse(open.FileName)) selected.Objects.Add(obj);
                 }
             }
             catch
@@ -262,6 +281,7 @@ namespace Lab7
             Storage = new Storage();
             objComboBox.Items.Clear();
             objComboBox.Items.Add("None");
+            objComboBox.SelectedIndex = 0;
 
             textureComboBox.Items.Clear();
             textureComboBox.Items.Add("None");
@@ -325,9 +345,10 @@ namespace Lab7
             if (sizeYBox != null) sizeY = float.Parse(sizeYBox.Text);
             if (sizeZBox != null) sizeZ = float.Parse(sizeZBox.Text);
 
-            var cube = new Primitives.Cube("cube" + Storage.GetObjects().Count, start, sizeX, sizeY, sizeZ);
+            var selected = Storage.GetScenes().Find(s => s.Name == sceneComboBox.SelectedItem.ToString());
+            var cube = new Primitives.Cube("cube" + selected.Objects.Count, start, sizeX, sizeY, sizeZ);
             cube.Material.DiffuseColor = color;
-            Storage.AddObject(cube);
+            selected.Objects.Add(cube);
             objComboBox.Items.Add(cube.Name);
         }
 
@@ -343,9 +364,11 @@ namespace Lab7
             var color = new Vector3(rcolor, gcolor, bcolor);
             var r = 1.0f;
             if (rBox != null) r = float.Parse(rBox.Text);
-            var sphere = new Primitives.Sphere("sphere" + Storage.GetObjects().Count, start, r);
+
+            var selected = Storage.GetScenes().Find(s => s.Name == sceneComboBox.SelectedItem.ToString());
+            var sphere = new Primitives.Sphere("sphere" + selected.Objects.Count, start, r);
             sphere.Material.DiffuseColor = color;
-            Storage.AddObject(sphere);
+            selected.Objects.Add(sphere);
             objComboBox.Items.Add(sphere);
         }
 
@@ -365,9 +388,11 @@ namespace Lab7
             if (sizeXBox != null) sizeX = float.Parse(sizeXBox.Text);
             if (sizeYBox != null) sizeY = float.Parse(sizeYBox.Text);
             if (sizeZBox != null) sizeZ = float.Parse(sizeZBox.Text);
-            var pyramid = new Primitives.Pyramid("pyramid" + Storage.GetObjects().Count, start, sizeX, sizeY, sizeZ);
+
+            var selected = Storage.GetScenes().Find(s => s.Name == sceneComboBox.SelectedItem.ToString());
+            var pyramid = new Primitives.Pyramid("pyramid" + selected.Objects.Count, start, sizeX, sizeY, sizeZ);
             pyramid.Material.DiffuseColor = color;
-            Storage.AddObject(pyramid);
+            selected.Objects.Add(pyramid);
             objComboBox.Items.Add(pyramid.Name);
         }
 
@@ -385,9 +410,11 @@ namespace Lab7
             var R = 2.0f;
             if (rBox != null) r = float.Parse(rBox.Text);
             if (BigRBox != null) R = float.Parse(BigRBox.Text);
-            var torus = new Primitives.Torus("torus" + Storage.GetObjects().Count, start, r, R);
+
+            var selected = Storage.GetScenes().Find(s => s.Name == sceneComboBox.SelectedItem.ToString());
+            var torus = new Primitives.Torus("torus" + selected.Objects.Count, start, r, R);
             torus.Material.DiffuseColor = color;
-            Storage.AddObject(torus);
+            selected.Objects.Add(torus);
             objComboBox.Items.Add(torus.Name);
         }
 
@@ -406,9 +433,11 @@ namespace Lab7
             if (rBox != null) r = float.Parse(rBox.Text);
             var sizeZ = 1.0f;
             if (sizeZBox != null) sizeZ = float.Parse(sizeZBox.Text);
-            var conus = new Primitives.Conus("conus" + Storage.GetObjects().Count, start, 30, r, sizeZ);
+
+            var selected = Storage.GetScenes().Find(s => s.Name == sceneComboBox.SelectedItem.ToString());
+            var conus = new Primitives.Conus("conus" + selected.Objects.Count, start, 30, r, sizeZ);
             conus.Material.DiffuseColor = color;
-            Storage.AddObject(conus);
+            selected.Objects.Add(conus);
             objComboBox.Items.Add(conus.Name);
         }
 
@@ -427,10 +456,55 @@ namespace Lab7
             if (rBox != null) r = float.Parse(rBox.Text);
             var sizeZ = 1.0f;
             if (sizeZBox != null) sizeZ = float.Parse(sizeZBox.Text);
-            var cylinder = new Primitives.Cylinder("cylinder" + Storage.GetObjects().Count, start, r, sizeZ);
+
+            var selected = Storage.GetScenes().Find(s => s.Name == sceneComboBox.SelectedItem.ToString());
+            var cylinder = new Primitives.Cylinder("cylinder" + selected.Objects.Count, start, r, sizeZ);
             cylinder.Material.DiffuseColor = color;
-            Storage.AddObject(cylinder);
+            selected.Objects.Add(cylinder);
             objComboBox.Items.Add(cylinder.Name);
+        }
+
+        private void greekTempleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var selected = Storage.GetScenes().Find(s => s.Name == sceneComboBox.SelectedItem.ToString());
+            selected.Objects.Add(new Primitives.Cube("greektemple_stair1", new Vector3(0, 0, 0), 11, 9, 1));
+            selected.Objects.Add(new Primitives.Cube("greektemple_stair2", new Vector3(-1, -1, -1), 13, 11, 1));
+            selected.Objects.Add(new Primitives.Cube("greektemple_stair3", new Vector3(-2, -2, -2), 15, 13, 1));
+
+            selected.Objects.Add(new Primitives.Cylinder("greektemple_column1", new Vector3(1, 1, 0), 1, 11));
+            selected.Objects.Add(new Primitives.Cylinder("greektemple_column2", new Vector3(4, 1, 0), 1, 11));
+            selected.Objects.Add(new Primitives.Cylinder("greektemple_column3", new Vector3(7, 1, 0), 1, 11));
+            selected.Objects.Add(new Primitives.Cylinder("greektemple_column4", new Vector3(10, 1, 0), 1, 11));
+
+            selected.Objects.Add(new Primitives.Cylinder("greektemple_column5", new Vector3(1, 8, 0), 1, 11));
+            selected.Objects.Add(new Primitives.Cylinder("greektemple_column6", new Vector3(4, 8, 0), 1, 11));
+            selected.Objects.Add(new Primitives.Cylinder("greektemple_column7", new Vector3(7, 8, 0), 1, 11));
+            selected.Objects.Add(new Primitives.Cylinder("greektemple_column8", new Vector3(10, 8, 0), 1, 11));
+
+            selected.Objects.Add(new Primitives.Cylinder("greektemple_column9", new Vector3(1, 5, 0), 1, 11));
+            selected.Objects.Add(new Primitives.Cylinder("greektemple_column10", new Vector3(4, 5, 0), 1, 11));
+            selected.Objects.Add(new Primitives.Cylinder("greektemple_column11", new Vector3(7, 5, 0), 1, 11));
+            selected.Objects.Add(new Primitives.Cylinder("greektemple_column12", new Vector3(10, 5, 0), 1, 11));
+
+            selected.Objects.Add(new Primitives.Cube("greektemple_roof1", new Vector3(0, 0, 11), 11, 9, 1));
+            selected.Objects.Add(new Primitives.Pyramid("greektemple_roof2", new Vector3(0, 0, 12), 11, 9, 5));
+
+            objComboBox.Items.AddRange(selected.Objects.Select(o => o.Name).ToArray());
+        }
+
+        private void sceneComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var scene = Storage.GetScenes().Find(s => s.Name == sceneComboBox.SelectedItem.ToString());
+            objComboBox.Items.Clear();
+            objComboBox.Items.Add("None");
+        }
+
+        private void newSceneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var name = "scene" + Storage.GetScenes().Count;
+            var scene = new Scene(name);
+            Storage.GetScenes().Add(scene);
+            sceneComboBox.Items.Add(name);
         }
     }
 }

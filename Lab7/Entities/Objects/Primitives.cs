@@ -71,10 +71,10 @@ namespace Lab7.Entities.Objects
                 var num = 50;
                 var angle = Math.PI * 2 / num;
                 var upperpoints = Enumerable.Range(0, num).Select(i =>
-                        Vector3.Add(start, new Vector3((float)Math.Sin(i * angle) * radius, (float)Math.Cos(i * angle) * radius, start.Z)))
+                        Vector3.Add(start, new Vector3((float)Math.Sin(i * angle) * radius, (float)Math.Cos(i * angle) * radius, start.Z + height)))
                         .ToList();
                 var lowerPoints = Enumerable.Range(0, num).Select(i =>
-                        Vector3.Add(start, new Vector3((float)Math.Sin(i * angle) * radius, (float)Math.Cos(i * angle) * radius, start.Z + height)))
+                        Vector3.Add(start, new Vector3((float)Math.Sin(i * angle) * radius, (float)Math.Cos(i * angle) * radius, start.Z)))
                         .ToList();
                 AddPolygon(new Polygon(upperpoints));
                 for (int i = 0; i < num - 1; i++)

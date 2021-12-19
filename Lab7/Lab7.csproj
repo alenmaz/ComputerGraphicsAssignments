@@ -82,6 +82,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Parsers\ObjFormatParser.cs" />
+    <Compile Include="Repositories\Scene.cs" />
     <Compile Include="Repositories\Storage.cs" />
     <Compile Include="Entities\Base\Texture.cs" />
     <EmbeddedResource Include="Forms\LightCreate.resx">

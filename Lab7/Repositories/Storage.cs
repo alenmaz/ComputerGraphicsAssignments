@@ -8,31 +8,28 @@ using System.Threading.Tasks;
 using Lab7.Entities.Base;
 using Lab7.Entities.Objects;
 
-namespace Lab7
+namespace Lab7.Repositories
 {
     public class Storage
     {
-        const int max_obj_size = 10;
+        const int max_obj_size = 50;
         const int max_material_size = 10;
         const int max_texture_size = 5;
         const int max_light_size = 5;
-        protected List<Object3D> objects { get; }
+        protected List<Scene> scenes { get; }
         protected List<Material> materials { get; }
         protected List<Texture> textures { get; }
         protected List<Light> lights { get; }
 
         public Storage()
         {
-            objects = new List<Object3D>();
+            scenes = new List<Scene>();
             materials = new List<Material>();
             textures = new List<Texture>();
             lights = new List<Light>();
         }
 
-        public void AddObject(Object3D obj)
-        {
-            if (objects.Count < max_obj_size) objects.Add(obj);
-        }
+        public void AddScene(Scene scene) => scenes.Add(scene);
 
         public void AddMaterial(Material material)
         {
@@ -49,7 +46,7 @@ namespace Lab7
             if(lights.Count < max_light_size) lights.Add(light);
         }
 
-        public List<Object3D> GetObjects() => objects;
+        public List<Scene> GetScenes() => scenes;
         public List<Material> GetMaterials() => materials;
         public List<Texture> GetTextures() => textures;
         public List<Light> GetLights() => lights;

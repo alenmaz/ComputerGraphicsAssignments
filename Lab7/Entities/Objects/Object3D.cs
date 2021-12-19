@@ -28,7 +28,6 @@ namespace Lab7.Entities.Objects
             Start = new Vector3(0, 0, 0);
             polygons = new List<Polygon>();
             Material = Material.Default;
-            Texture = new Texture("default", DrawFilledRectangle(254, 254));
         }
 
         public Object3D(List<Polygon> polygons)
@@ -36,12 +35,12 @@ namespace Lab7.Entities.Objects
             Start = new Vector3(0, 0, 0);
             this.polygons = polygons;
             Material = Material.Default;
-            Texture = new Texture("default", DrawFilledRectangle(254, 254));
         }
 
         public void Draw(Material material, Texture texture, Light light, Vector3 viewPos)
         {
-            var textureID = LoadTexture(texture);
+            var textureID = 0;
+            if(texture != null) LoadTexture(texture);
             Vector4 color;
             GL.BindTexture(TextureTarget.Texture2D, textureID);
             foreach (var p in polygons)
@@ -105,17 +104,6 @@ namespace Lab7.Entities.Objects
         public void AddPolygon(Polygon polygon)
         {
             polygons.Add(polygon);
-        }
-
-        private Bitmap DrawFilledRectangle(int x, int y)
-        {
-            Bitmap bmp = new Bitmap(x, y);
-            using (Graphics graph = Graphics.FromImage(bmp))
-            {
-                Rectangle ImageSize = new Rectangle(0, 0, x, y);
-                graph.FillRectangle(Brushes.White, ImageSize);
-            }
-            return bmp;
         }
     }
 }
