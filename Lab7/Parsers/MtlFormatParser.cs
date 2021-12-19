@@ -33,7 +33,7 @@ namespace Lab7.Parsesrs
                     if (Regex.IsMatch(line, @"^newmtl [a-zA-Z0-9._]+$"))
                     {
                         if (material != null) list.Add(material);
-                        material = new Material();
+                        material = new Material("");
                         material.Name = line.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries)[1];
                     }
                     if (Regex.IsMatch(line, @"^Ns (-?\d+\.\d+)$"))

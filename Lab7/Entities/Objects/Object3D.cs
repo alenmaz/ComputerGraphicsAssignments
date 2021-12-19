@@ -39,7 +39,7 @@ namespace Lab7.Entities.Objects
             Texture = new Texture("default", DrawFilledRectangle(254, 254));
         }
 
-        public void Draw(Material material, Texture texture, Vector3 normal, Light light, Vector3 viewPos)
+        public void Draw(Material material, Texture texture, Light light, Vector3 viewPos)
         {
             var textureID = LoadTexture(texture);
             Vector4 color;
@@ -49,13 +49,29 @@ namespace Lab7.Entities.Objects
                 GL.Begin(BeginMode.Polygon);
                 for (int i = 0; i < p.Vertexes.Count; i++)
                 {
-                    color = material.GetColor(normal, light, viewPos, p.Vertexes[i]);
+                    if (p.Normals.Count == 0) FillNormals(p);
+                    if (p.TextureCoordinates.Count == 0) FillTextureCoordinates(p);
+                    color = material.GetColor(p.Normals.ElementAtOrDefault(i), light, viewPos, p.Vertexes[i]);
                     GL.Color4(color);
-                    GL.TexCoord2(p.TextureCoordinates[i]);
+                    GL.TexCoord2(p.TextureCoordinates.ElementAtOrDefault(i));
                     GL.Vertex3(Vector3.Add(Start, p.Vertexes[i]));
                 }
                 GL.End();
             }
+        }
+
+        private void FillNormals(Polygon polygon)
+        {
+            for (int i = 0; i < polygon.Vertexes.Count; i++)
+                polygon.Normals.Add(new Vector3(1, 1, 1));
+        }
+
+        private void FillTextureCoordinates(Polygon polygon)
+        {
+            polygon.TextureCoordinates.Add(new Vector2(0, 0));
+            polygon.TextureCoordinates.Add(new Vector2(0, 1));
+            polygon.TextureCoordinates.Add(new Vector2(1, 1));
+            polygon.TextureCoordinates.Add(new Vector2(1, 0));
         }
 
         private int LoadTexture(Texture texture)

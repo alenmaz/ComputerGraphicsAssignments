@@ -13,8 +13,9 @@ namespace Lab7
     public class Storage
     {
         const int max_obj_size = 10;
-        const int max_material_size = 15;
+        const int max_material_size = 10;
         const int max_texture_size = 5;
+        const int max_light_size = 5;
         protected List<Object3D> objects { get; }
         protected List<Material> materials { get; }
         protected List<Texture> textures { get; }
@@ -45,7 +46,7 @@ namespace Lab7
 
         public void AddLight(Light light)
         {
-            lights.Add(light);
+            if(lights.Count < max_light_size) lights.Add(light);
         }
 
         public List<Object3D> GetObjects() => objects;

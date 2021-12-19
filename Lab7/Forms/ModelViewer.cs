@@ -66,7 +66,8 @@ namespace Lab7
             objComboBox.Items.Add("None");
             objComboBox.SelectedIndex = 0;
 
-            mComboBox.Items.Add("None");
+            Storage.AddMaterial(Material.Default);
+            mComboBox.Items.Add(Material.Default.Name);
             mComboBox.SelectedIndex = 0;
 
             textureComboBox.Items.Add("None");
@@ -75,8 +76,6 @@ namespace Lab7
             lightComboBox.Items.Add("None");
             lightComboBox.Items.Add("base");
             lightComboBox.SelectedIndex = 0;
-
-            sceneModeToolStripMenuItem.Checked = true;
         }
 
         private void Update(object sender, EventArgs e)
@@ -84,6 +83,14 @@ namespace Lab7
             glControl1.Invalidate();
             foreach (var l in Storage.GetLights())
                 if(!lightComboBox.Items.Contains(l.Name)) lightComboBox.Items.Add(l.Name);
+            var obj2 = Storage.GetObjects().Find(o => o.Name == objComboBox.SelectedItem.ToString());
+            if (obj2 != null)
+            {
+                var mat2 = Storage.GetMaterials().Find(m => m.Name == mComboBox.SelectedItem.ToString());
+                if (mat2 != null) obj2.Material = mat2;
+                var tex2 = Storage.GetTextures().Find(t => t.Name == textureComboBox.SelectedItem.ToString());
+                if (tex2 != null) obj2.Texture = tex2;
+            }
         }
 
         private void glControl1_Zoom(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -111,7 +118,7 @@ namespace Lab7
 
             var viewPos = new Vector3(zoom, zoom, zoom);
             Matrix4 modelview = Matrix4.LookAt
-              (viewPos, new Vector3(0, 0, 0), new Vector3(0, 1, 0));
+              (viewPos, new Vector3(0, 0, 0), new Vector3(0, 0, 1));
 
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadMatrix(ref modelview);
@@ -125,8 +132,8 @@ namespace Lab7
             GL.ShadeModel(ShadingModel.Smooth);
 
             DrawAxis(new Vector3(1.0f, 1.0f, 0.0f), new Vector3(1.0f, 0.0f, 0.0f), new Vector3(0.2f, 0.9f, 1.0f));
-            if (sceneModeToolStripMenuItem.Checked) DrawAll(viewPos);
-            else if (singleObjectModeToolStripMenuItem.Checked) DrawObject(viewPos);
+            if (drawAllCheckBox.Checked) DrawAll(viewPos);
+            else DrawObject(viewPos);
 
             glControl1.SwapBuffers();
         }
@@ -146,7 +153,6 @@ namespace Lab7
                 if (obj2 != null) 
                     obj2.Draw(mat2 is null ? obj2.Material : mat2, 
                         tex2 is null ? obj2.Texture : tex2, 
-                        normal, 
                         light is null ? Storage.GetLights().Find(l => l.Name == "base") : light, 
                         viewPos);
             }
@@ -154,21 +160,9 @@ namespace Lab7
 
         private void DrawAll(Vector3 viewPos)
         {
-            var normal = new Vector3(1, 1, 1);
             var light = Storage.GetLights().Find(l => l.Name == lightComboBox.SelectedItem.ToString());
-            var objects = Storage.GetObjects();
-            Material mat = null;
-            Texture text = null;
-            for (var i = 0; i < objects.Count; i++)
-            {
-                mat = Storage.GetMaterials().ElementAtOrDefault(i);
-                text = Storage.GetTextures().ElementAtOrDefault(i);
-                if (objects[i] != null) 
-                    objects[i].Draw(mat is null ? objects[i].Material : mat, 
-                        text is null ? objects[i].Texture : text, normal,
-                        light is null ? Storage.GetLights().Find(l => l.Name == "base") : light, 
-                        viewPos);
-            }
+            foreach (var obj in Storage.GetObjects())
+                obj.Draw(obj.Material,obj.Texture, light is null ? Storage.GetLights().Find(l => l.Name == "base") : light, viewPos);
         }
 
         private static void DrawAxis(Vector3 clr1, Vector3 clr2, Vector3 clr3)
@@ -266,6 +260,14 @@ namespace Lab7
         private void clearToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Storage = new Storage();
+            objComboBox.Items.Clear();
+            objComboBox.Items.Add("None");
+
+            textureComboBox.Items.Clear();
+            textureComboBox.Items.Add("None");
+
+            mComboBox.Items.Clear();
+            mComboBox.Items.Add("None");
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -290,23 +292,145 @@ namespace Lab7
             }
         }
 
-        private void singleObjectModeToolStripMenuItem_Click(object sender, EventArgs e)
+        private Vector3 ParseStart()
         {
-            if (singleObjectModeToolStripMenuItem.Checked)
-            {
-                sceneModeToolStripMenuItem.Checked = false;
-                paramsGroupBox.Show();
-            }
-            else paramsGroupBox.Hide();
+            var x = 0.0f;
+            var y = 0.0f;
+            var z = 0.0f;
+
+            if(xTextBox.Text != null) 
+                x = float.Parse(xTextBox.Text);
+            if (yTextBox.Text != null)
+                y = float.Parse(yTextBox.Text);
+            if (zTextBox.Text != null)
+                z = float.Parse(zTextBox.Text);
+
+            return new Vector3(x,y,z);
         }
 
-        private void sceneModeToolStripMenuItem_Click(object sender, EventArgs e)
+        private void cubeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (sceneModeToolStripMenuItem.Checked)
-            {
-                singleObjectModeToolStripMenuItem.Checked = false;
-                paramsGroupBox.Hide();
-            }
+            var start = ParseStart();
+            var rcolor = 0.0f;
+            var gcolor = 0.0f;
+            var bcolor = 0.0f;
+            if (RGBBox1.Text != null) rcolor = float.Parse(RGBBox1.Text);
+            if (RGBBox2.Text != null) gcolor = float.Parse(RGBBox2.Text);
+            if (RGBBox3.Text != null) bcolor = float.Parse(RGBBox3.Text);
+            var color = new Vector3(rcolor, gcolor, bcolor);
+            var sizeX = 1.0f;
+            var sizeY = 1.0f;
+            var sizeZ = 1.0f;
+            if(sizeXBox != null) sizeX = float.Parse(sizeXBox.Text);
+            if (sizeYBox != null) sizeY = float.Parse(sizeYBox.Text);
+            if (sizeZBox != null) sizeZ = float.Parse(sizeZBox.Text);
+
+            var cube = new Primitives.Cube("cube" + Storage.GetObjects().Count, start, sizeX, sizeY, sizeZ);
+            cube.Material.DiffuseColor = color;
+            Storage.AddObject(cube);
+            objComboBox.Items.Add(cube.Name);
+        }
+
+        private void sphereToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var start = ParseStart();
+            var rcolor = 0.0f;
+            var gcolor = 0.0f;
+            var bcolor = 0.0f;
+            if (RGBBox1.Text != null) rcolor = float.Parse(RGBBox1.Text);
+            if (RGBBox2.Text != null) gcolor = float.Parse(RGBBox2.Text);
+            if (RGBBox3.Text != null) bcolor = float.Parse(RGBBox3.Text);
+            var color = new Vector3(rcolor, gcolor, bcolor);
+            var r = 1.0f;
+            if (rBox != null) r = float.Parse(rBox.Text);
+            var sphere = new Primitives.Sphere("sphere" + Storage.GetObjects().Count, start, r);
+            sphere.Material.DiffuseColor = color;
+            Storage.AddObject(sphere);
+            objComboBox.Items.Add(sphere);
+        }
+
+        private void pyramidToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var start = ParseStart();
+            var rcolor = 0.0f;
+            var gcolor = 0.0f;
+            var bcolor = 0.0f;
+            if (RGBBox1.Text != null) rcolor = float.Parse(RGBBox1.Text);
+            if (RGBBox2.Text != null) gcolor = float.Parse(RGBBox2.Text);
+            if (RGBBox3.Text != null) bcolor = float.Parse(RGBBox3.Text);
+            var color = new Vector3(rcolor, gcolor, bcolor);
+            var sizeX = 1.0f;
+            var sizeY = 1.0f;
+            var sizeZ = 1.0f;
+            if (sizeXBox != null) sizeX = float.Parse(sizeXBox.Text);
+            if (sizeYBox != null) sizeY = float.Parse(sizeYBox.Text);
+            if (sizeZBox != null) sizeZ = float.Parse(sizeZBox.Text);
+            var pyramid = new Primitives.Pyramid("pyramid" + Storage.GetObjects().Count, start, sizeX, sizeY, sizeZ);
+            pyramid.Material.DiffuseColor = color;
+            Storage.AddObject(pyramid);
+            objComboBox.Items.Add(pyramid.Name);
+        }
+
+        private void torusToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var start = ParseStart();
+            var rcolor = 0.0f;
+            var gcolor = 0.0f;
+            var bcolor = 0.0f;
+            if (RGBBox1.Text != null) rcolor = float.Parse(RGBBox1.Text);
+            if (RGBBox2.Text != null) gcolor = float.Parse(RGBBox2.Text);
+            if (RGBBox3.Text != null) bcolor = float.Parse(RGBBox3.Text);
+            var color = new Vector3(rcolor, gcolor, bcolor);
+            var r = 1.0f;
+            var R = 2.0f;
+            if (rBox != null) r = float.Parse(rBox.Text);
+            if (BigRBox != null) R = float.Parse(BigRBox.Text);
+            var torus = new Primitives.Torus("torus" + Storage.GetObjects().Count, start, r, R);
+            torus.Material.DiffuseColor = color;
+            Storage.AddObject(torus);
+            objComboBox.Items.Add(torus.Name);
+        }
+
+        private void conusToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var start = ParseStart();
+            var rcolor = 0.0f;
+            var gcolor = 0.0f;
+            var bcolor = 0.0f;
+            if (RGBBox1.Text != null) rcolor = float.Parse(RGBBox1.Text);
+            if (RGBBox2.Text != null) gcolor = float.Parse(RGBBox2.Text);
+            if (RGBBox3.Text != null) bcolor = float.Parse(RGBBox3.Text);
+            var color = new Vector3(rcolor, gcolor, bcolor);
+
+            var r = 1.0f;
+            if (rBox != null) r = float.Parse(rBox.Text);
+            var sizeZ = 1.0f;
+            if (sizeZBox != null) sizeZ = float.Parse(sizeZBox.Text);
+            var conus = new Primitives.Conus("conus" + Storage.GetObjects().Count, start, 30, r, sizeZ);
+            conus.Material.DiffuseColor = color;
+            Storage.AddObject(conus);
+            objComboBox.Items.Add(conus.Name);
+        }
+
+        private void cylinderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var start = ParseStart();
+            var rcolor = 0.0f;
+            var gcolor = 0.0f;
+            var bcolor = 0.0f;
+            if (RGBBox1.Text != null) rcolor = float.Parse(RGBBox1.Text);
+            if (RGBBox2.Text != null) gcolor = float.Parse(RGBBox2.Text);
+            if (RGBBox3.Text != null) bcolor = float.Parse(RGBBox3.Text);
+            var color = new Vector3(rcolor, gcolor, bcolor);
+
+            var r = 1.0f;
+            if (rBox != null) r = float.Parse(rBox.Text);
+            var sizeZ = 1.0f;
+            if (sizeZBox != null) sizeZ = float.Parse(sizeZBox.Text);
+            var cylinder = new Primitives.Cylinder("cylinder" + Storage.GetObjects().Count, start, r, sizeZ);
+            cylinder.Material.DiffuseColor = color;
+            Storage.AddObject(cylinder);
+            objComboBox.Items.Add(cylinder.Name);
         }
     }
 }

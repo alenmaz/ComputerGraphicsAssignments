@@ -59,7 +59,7 @@ namespace Lab7.Parsesrs
                     if (Regex.IsMatch(line, @"^f (\d+/\d+/\d+ ?)+$"))
                     {
                         var polygon = new Polygon();
-                        ParsePolygon(vertexes, textureCoordinates, line, polygon);
+                        ParsePolygon(vertexes, textureCoordinates, normals, line, polygon);
                         model.AddPolygon(polygon);
                     }
                 }
@@ -68,7 +68,7 @@ namespace Lab7.Parsesrs
             return list;
         }
 
-        private static void ParsePolygon(List<Vector3> vertexes, List<Vector2> textureCoordinates, string line, Polygon polygon)
+        private static void ParsePolygon(List<Vector3> vertexes, List<Vector2> textureCoordinates, List<Vector3> normals, string line, Polygon polygon)
         {
             var facesParams = line.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries).Skip(1);
             foreach (var param in facesParams)
@@ -76,6 +76,7 @@ namespace Lab7.Parsesrs
                 var vertexesParams = param.Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
                 polygon.Vertexes.Add(vertexes[int.Parse(vertexesParams[0]) - 1]);
                 polygon.TextureCoordinates.Add(textureCoordinates[int.Parse(vertexesParams[1]) - 1]);
+                polygon.Normals.Add(normals[int.Parse(vertexesParams[2]) - 1]);
             }
         }
 

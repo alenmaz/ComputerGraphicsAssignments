@@ -24,8 +24,9 @@ namespace Lab7.Entities.Base
         public Vector3 DiffuseColor { get; set; }
         public string Name { get; set; }
 
-        public Material()
+        public Material(string name)
         {
+            Name = name;
             shininess = 0.0f;
             DiffuseColor = new Vector3(0.0f, 0.0f, 0.0f);
             ambient = new Vector3(0.0f, 0.0f, 0.0f);
@@ -33,8 +34,9 @@ namespace Lab7.Entities.Base
             emissive = new Vector3(0.0f, 0.0f, 0.0f);
             dissolve = 1.0f;
         }
-        public Material(Vector3 diffuseColor)
+        public Material(string name, Vector3 diffuseColor)
         {
+            Name = name;
             DiffuseColor = diffuseColor;
             shininess = 0.0f;
             ambient = new Vector3(0.0f, 0.0f, 0.0f);
@@ -53,7 +55,7 @@ namespace Lab7.Entities.Base
             this.dissolve = dissolve;
         }
 
-        public static Material Default { get => new Material(new Vector3(0.0f, 0.0f, 0.0f)); }
+        public static Material Default { get => new Material("default", new Vector3(1.0f, 1.0f, 1.0f)); }
 
         public Vector4 GetColor(Vector3 Normal, Light light, Vector3 viewPos, Vector3 FragPos)
         {

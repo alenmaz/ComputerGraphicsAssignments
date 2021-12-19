@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\Objects\Light.cs" />
+    <Compile Include="Entities\Objects\Primitives.cs" />
     <Compile Include="Forms\LightCreate.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -68,6 +69,12 @@
     </Compile>
     <Compile Include="Forms\ModelViewer.Designer.cs">
       <DependentUpon>ModelViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ObjectSpawner.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ObjectSpawner.Designer.cs">
+      <DependentUpon>ObjectSpawner.cs</DependentUpon>
     </Compile>
     <Compile Include="Parsers\MtlFormatParser.cs" />
     <Compile Include="Entities\Objects\Object3D.cs" />
@@ -82,6 +89,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ModelViewer.resx">
       <DependentUpon>ModelViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ObjectSpawner.resx">
+      <DependentUpon>ObjectSpawner.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
