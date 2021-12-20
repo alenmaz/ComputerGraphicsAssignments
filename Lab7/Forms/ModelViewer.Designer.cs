@@ -43,18 +43,17 @@ namespace Lab7
             this.importImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sceneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newSceneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.lightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.makeLightSourceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteLightSourceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cubeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sphereToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pyramidToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.torusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.conusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cylinderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modelExampleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.greekTempleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cubeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pyramidToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.conusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cylinderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label2 = new System.Windows.Forms.Label();
             this.lightComboBox = new System.Windows.Forms.ComboBox();
@@ -62,6 +61,7 @@ namespace Lab7
             this.sceneComboBox = new System.Windows.Forms.ComboBox();
             this.drawAllCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label14 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.RGBBox3 = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
@@ -87,8 +87,6 @@ namespace Lab7
             this.xLabel = new System.Windows.Forms.Label();
             this.xTextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.clearToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.label14 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -221,6 +219,13 @@ namespace Lab7
             this.newSceneToolStripMenuItem.Text = "New scene";
             this.newSceneToolStripMenuItem.Click += new System.EventHandler(this.newSceneToolStripMenuItem_Click);
             // 
+            // clearToolStripMenuItem1
+            // 
+            this.clearToolStripMenuItem1.Name = "clearToolStripMenuItem1";
+            this.clearToolStripMenuItem1.Size = new System.Drawing.Size(131, 22);
+            this.clearToolStripMenuItem1.Text = "Clear";
+            this.clearToolStripMenuItem1.Click += new System.EventHandler(this.clearToolStripMenuItem1_Click);
+            // 
             // lightToolStripMenuItem
             // 
             this.lightToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -249,63 +254,19 @@ namespace Lab7
             this.addToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.modelExampleToolStripMenuItem,
             this.cubeToolStripMenuItem,
-            this.sphereToolStripMenuItem,
             this.pyramidToolStripMenuItem,
-            this.torusToolStripMenuItem,
             this.conusToolStripMenuItem,
             this.cylinderToolStripMenuItem});
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
             this.addToolStripMenuItem.Size = new System.Drawing.Size(82, 20);
             this.addToolStripMenuItem.Text = "Add mesh...";
             // 
-            // cubeToolStripMenuItem
-            // 
-            this.cubeToolStripMenuItem.Name = "cubeToolStripMenuItem";
-            this.cubeToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
-            this.cubeToolStripMenuItem.Text = "Cube";
-            this.cubeToolStripMenuItem.Click += new System.EventHandler(this.cubeToolStripMenuItem_Click);
-            // 
-            // sphereToolStripMenuItem
-            // 
-            this.sphereToolStripMenuItem.Name = "sphereToolStripMenuItem";
-            this.sphereToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
-            this.sphereToolStripMenuItem.Text = "Sphere";
-            this.sphereToolStripMenuItem.Click += new System.EventHandler(this.sphereToolStripMenuItem_Click);
-            // 
-            // pyramidToolStripMenuItem
-            // 
-            this.pyramidToolStripMenuItem.Name = "pyramidToolStripMenuItem";
-            this.pyramidToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
-            this.pyramidToolStripMenuItem.Text = "Pyramid";
-            this.pyramidToolStripMenuItem.Click += new System.EventHandler(this.pyramidToolStripMenuItem_Click);
-            // 
-            // torusToolStripMenuItem
-            // 
-            this.torusToolStripMenuItem.Name = "torusToolStripMenuItem";
-            this.torusToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
-            this.torusToolStripMenuItem.Text = "Torus";
-            this.torusToolStripMenuItem.Click += new System.EventHandler(this.torusToolStripMenuItem_Click);
-            // 
-            // conusToolStripMenuItem
-            // 
-            this.conusToolStripMenuItem.Name = "conusToolStripMenuItem";
-            this.conusToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
-            this.conusToolStripMenuItem.Text = "Conus";
-            this.conusToolStripMenuItem.Click += new System.EventHandler(this.conusToolStripMenuItem_Click);
-            // 
-            // cylinderToolStripMenuItem
-            // 
-            this.cylinderToolStripMenuItem.Name = "cylinderToolStripMenuItem";
-            this.cylinderToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
-            this.cylinderToolStripMenuItem.Text = "Cylinder";
-            this.cylinderToolStripMenuItem.Click += new System.EventHandler(this.cylinderToolStripMenuItem_Click);
-            // 
             // modelExampleToolStripMenuItem
             // 
             this.modelExampleToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.greekTempleToolStripMenuItem});
             this.modelExampleToolStripMenuItem.Name = "modelExampleToolStripMenuItem";
-            this.modelExampleToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.modelExampleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.modelExampleToolStripMenuItem.Text = "Model Example";
             // 
             // greekTempleToolStripMenuItem
@@ -314,6 +275,34 @@ namespace Lab7
             this.greekTempleToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.greekTempleToolStripMenuItem.Text = "Greek Temple";
             this.greekTempleToolStripMenuItem.Click += new System.EventHandler(this.greekTempleToolStripMenuItem_Click);
+            // 
+            // cubeToolStripMenuItem
+            // 
+            this.cubeToolStripMenuItem.Name = "cubeToolStripMenuItem";
+            this.cubeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.cubeToolStripMenuItem.Text = "Cube";
+            this.cubeToolStripMenuItem.Click += new System.EventHandler(this.cubeToolStripMenuItem_Click);
+            // 
+            // pyramidToolStripMenuItem
+            // 
+            this.pyramidToolStripMenuItem.Name = "pyramidToolStripMenuItem";
+            this.pyramidToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.pyramidToolStripMenuItem.Text = "Pyramid";
+            this.pyramidToolStripMenuItem.Click += new System.EventHandler(this.pyramidToolStripMenuItem_Click);
+            // 
+            // conusToolStripMenuItem
+            // 
+            this.conusToolStripMenuItem.Name = "conusToolStripMenuItem";
+            this.conusToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.conusToolStripMenuItem.Text = "Conus";
+            this.conusToolStripMenuItem.Click += new System.EventHandler(this.conusToolStripMenuItem_Click);
+            // 
+            // cylinderToolStripMenuItem
+            // 
+            this.cylinderToolStripMenuItem.Name = "cylinderToolStripMenuItem";
+            this.cylinderToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.cylinderToolStripMenuItem.Text = "Cylinder";
+            this.cylinderToolStripMenuItem.Click += new System.EventHandler(this.cylinderToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
@@ -411,6 +400,15 @@ namespace Lab7
             this.groupBox2.TabIndex = 15;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Object spawner settings";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(116, 130);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(95, 13);
+            this.label14.TabIndex = 25;
+            this.label14.Text = "Optional properties";
             // 
             // label11
             // 
@@ -626,22 +624,6 @@ namespace Lab7
             this.label3.TabIndex = 0;
             this.label3.Text = "Start point";
             // 
-            // clearToolStripMenuItem1
-            // 
-            this.clearToolStripMenuItem1.Name = "clearToolStripMenuItem1";
-            this.clearToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-            this.clearToolStripMenuItem1.Text = "Clear";
-            this.clearToolStripMenuItem1.Click += new System.EventHandler(this.clearToolStripMenuItem1_Click);
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(116, 130);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(95, 13);
-            this.label14.TabIndex = 25;
-            this.label14.Text = "Optional properties";
-            // 
             // ModelViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -688,9 +670,7 @@ namespace Lab7
         private System.Windows.Forms.ComboBox lightComboBox;
         private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cubeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem sphereToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pyramidToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem torusToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem conusToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cylinderToolStripMenuItem;
         private System.Windows.Forms.GroupBox groupBox1;
