@@ -31,8 +31,6 @@ namespace Lab8_3
             //blue diffuse ball
             scene.Objects.Add(new Sphere(new Vector3(-4, -2, -15), 2, new Vector3(1f, 0f, 1f), Vector3.Zero, 0, 0f));
             //blue diffuse ball
-            scene.Objects.Add(new Sphere(new Vector3(0, -3, -15), 1, new Vector3(0f, 0f, 1f), Vector3.Zero, 0, 0f));
-            //blue diffuse ball
             scene.Objects.Add(new Sphere(new Vector3(2, -3, -15), 1, new Vector3(0f, 0f, 1f), Vector3.Zero, 0, 0f));
             //light
             scene.Objects.Add(new Sphere(new Vector3(2, 4, 0), 2, new Vector3(1f, 1, 1f), new Vector3(1, 1, 1), 1, 0f));
